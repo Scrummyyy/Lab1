@@ -1,0 +1,80 @@
+function triangle(arg1, type1, arg2, type2) {
+    // Перевірка на некоректність уведених значень
+    if (arg1 <= 0 || arg2 <= 0) {
+        console.log("Один або обидва аргументи мають неправильне значення (від'ємні або нульові).");
+        return "failed";
+    }
+
+    // Перевірка типів аргументів
+    const validTypes = ["leg", "hypotenuse", "adjacent angle", "opposite angle", "angle"];
+    if (!validTypes.includes(type1) || !validTypes.includes(type2)) {
+        console.log("Некоректний тип аргументу.");
+        return "failed";
+    }
+
+    // Обчислення
+    let c, a, b, alpha, beta;
+
+    if (type1 === "hypotenuse") {
+        c = arg1;
+        if (type2 === "leg") {
+            a = arg2;
+            b = Math.sqrt(c * c - a * a);
+            alpha = Math.atan(a / b) * 180 / Math.PI;
+            beta = 90 - alpha;
+        } else {
+            beta = arg2;
+            alpha = 90 - beta;
+            a = c * Math.sin(beta * Math.PI / 180);
+            b = c * Math.cos(beta * Math.PI / 180);
+        }
+    } else if (type1 === "leg") {
+        a = arg1;
+        if (type2 === "hypotenuse") {
+            c = arg2;
+            b = Math.sqrt(c * c - a * a);
+            alpha = Math.atan(a / b) * 180 / Math.PI;
+            beta = 90 - alpha;
+        } else {
+            beta = arg2;
+            alpha = 90 - beta;
+            c = a / Math.sin(beta * Math.PI / 180);
+            b = a / Math.tan(beta * Math.PI / 180);
+        }
+    } else if (type1 === "adjacent angle" || type1 === "opposite angle") {
+        if (type2 === "leg") {
+            a = arg2;
+            beta = arg1;
+            alpha = 90 - beta;
+            b = a * Math.tan(beta * Math.PI / 180);
+            c = a / Math.cos(beta * Math.PI / 180);
+        } else {
+            beta = arg2;
+            alpha = arg1;
+            a = c * Math.sin(beta * Math.PI / 180);
+            b = c * Math.cos(beta * Math.PI / 180);
+        }
+    } else { // type1 === "angle"
+        alpha = arg1;
+        if (type2 === "leg") {
+            a = arg2;
+            beta = 90 - alpha;
+            b = a * Math.tan(beta * Math.PI / 180);
+            c = a / Math.cos(beta * Math.PI / 180);
+        } else {
+            beta = arg2;
+            a = c * Math.sin(beta * Math.PI / 180);
+            b = c * Math.cos(beta * Math.PI / 180);
+        }
+    }
+
+    // Перевірка на некоректність уведених значень
+    if (a <= 0 || b <= 0 || c <= 0 || alpha <= 0 || beta <= 0 || alpha >= 90 || beta >= 90) {
+        console.log("Некоректні дані. Трикутник із заданими параметрами не існує.");
+        return "failed";
+    }
+
+    // Вивід результатів
+    console.log(`a = ${a}, b = ${b}, c = ${c}, alpha = ${alpha}, beta = ${beta}`);
+    return "success";
+}
