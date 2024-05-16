@@ -1,0 +1,29 @@
+const fs = require('fs');
+const os = require('os');
+
+// Генеруємо timestamp
+const timestamp = new Date().getTime();
+
+// Отримуємо ім'я користувача, під яким виконується сервер
+const user = os.userInfo().username;
+
+// Створюємо об'єкт з даними
+const data = {
+    date: timestamp,
+    user: user
+};
+
+// Перетворюємо об'єкт у JSON-рядок
+const jsonData = JSON.stringify(data, null, 2); // Використовуємо другий аргумент для красивого форматування
+
+// Шлях до файлу, де збережемо JSON-дані
+const filePath = __dirname + '/data/data.json';
+
+// Записуємо JSON-рядок у файл
+fs.writeFile(filePath, jsonData, (err) => {
+    if (err) {
+        console.error('Error writing JSON file:', err);
+    } else {
+        console.log('JSON file has been successfully created.');
+    }
+});
