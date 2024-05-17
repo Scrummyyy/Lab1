@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список справ</title>
+</head>
+<body>
+    <h1>Список справ</h1>
+    <form action="/add" method="POST">
+        <input type="text" name="task" required>
+        <button type="submit">Додати</button>
+    </form>
+    <h2>Завдання</h2>
+    <ul>
+        <% tasks.forEach((task, index) => { %>
+            <li>
+                <%= task.completed ? '<s>' : '' %><%= task.name %><%= task.completed ? '</s>' : '' %>
+                <a href="/complete/<%= index %>"><button><%= task.completed ? 'Невиконано' : 'Виконано' %></button></a>
+                <a href="/edit/<%= index %>"><button>Редагувати</button></a>
+                <a href="/delete/<%= index %>"><button>Видалити</button></a>
+            </li>
+        <% }); %>
+    </ul>
+    <h2>Фільтрувати</h2>
+    <a href="/"><button>Усі</button></a>
+    <a href="/?filter=completed"><button>Виконані</button></a>
+    <a href="/?filter=notcompleted"><button>Невиконані</button></a>
+</body>
+</html>

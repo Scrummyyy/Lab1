@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редагувати завдання</title>
+</head>
+<body>
+    <h1>Редагувати завдання</h1>
+    <form action="/edit/<%= index %>" method="POST">
+        <input type="text" name="task" value="<%= task.name %>" required>
+        <button type="submit">Зберегти</button>
+    </form>
+    <a href="/"><button>Назад</button></a>
+</body>
+</html>
